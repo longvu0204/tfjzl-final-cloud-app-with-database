@@ -5,13 +5,16 @@ from django.views import generic
 from .models import Course, Lesson, Enrollment, Question, Choice, Submission
 
 class CourseListView(generic.ListView):
-    template_name = 'onlinecourse/course_list.html'
+    template_name = 'onlinecourse/course_list_bootstrap.html'
     context_object_name = 'course_list'
-    def get_queryset(self): return Course.objects.order_by('-pub_date')[:10]
+    model = Course  # <--- BẮT BUỘC PHẢI THÊM DÒNG NÀY
+
+    def get_queryset(self):
+        return Course.objects.order_by('-pub_date')[:10]
 
 class CourseDetailView(generic.DetailView):
     model = Course
-    template_name = 'onlinecourse/course_details_bootstrap.html'
+    template_name = 'onlinecourse/course_detail_bootstrap.html' # <--- ĐẢM BẢO TÊN FILE CHÍNH XÁC NHƯ NÀY
 
 def enroll(request, course_id):
     if request.method == 'POST' and request.user.is_authenticated:
