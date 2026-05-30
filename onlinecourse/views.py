@@ -14,7 +14,7 @@ class CourseListView(generic.ListView):
 
 class CourseDetailView(generic.DetailView):
     model = Course
-    template_name = 'onlinecourse/course_detail_bootstrap.html' # <--- ĐẢM BẢO TÊN FILE CHÍNH XÁC NHƯ NÀY
+    template_name = 'onlinecourse/course_details_bootstrap.html' # <--- ĐẢM BẢO TÊN FILE CHÍNH XÁC NHƯ NÀY
 
 def enroll(request, course_id):
     if request.method == 'POST' and request.user.is_authenticated:
