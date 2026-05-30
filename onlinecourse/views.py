@@ -20,8 +20,7 @@ def enroll(request, course_id):
     if request.method == 'POST' and request.user.is_authenticated:
         course = get_object_or_404(Course, pk=course_id)
         Enrollment.objects.get_or_create(user=request.user, course=course)
-        return HttpResponseRedirect(reverse('onlinecourse:course_details', args=(course.id,)))
-
+    return redirect('onlinecourse:course_details', pk=course_id)
 def submit(request, course_id):
     if request.method == 'POST' and request.user.is_authenticated:
         course = get_object_or_404(Course, pk=course_id)
