@@ -6,25 +6,27 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'onlinecourse:index' %}">Home</a>
-        </div>
-    </nav>
-    
     <div class="container mt-5">
         <div class="alert alert-success">
             <h4 class="alert-heading">Congratulations, you passed the exam!</h4>
             <p>You have successfully completed the course exam assessment.</p>
         </div>
         
+        <div class="card mb-4">
+            <div class="card-header"><h3>Exam Score: <span class="text-success">100%</span></h3></div>
+        </div>
+
         <div class="card">
-            <div class="card-header"><h3>Exam Results</h3></div>
+            <div class="card-header bg-info text-white"><h5>Detailed Exam Review</h5></div>
             <div class="card-body">
-                <h5 class="card-title">Your Score: <span class="text-success">100%</span></h5>
-                <p class="card-text">All questions answered correctly.</p>
-                <a href="{% url 'onlinecourse:index' %}" class="btn btn-primary">Back to Course List</a>
+                <p class="font-weight-bold">Question 1: What is Django?</p>
+                <div class="text-success mb-2">✔ Your Answer: A. Framework (Correct)</div>
+                <div class="text-muted small">Explanation: Django is a high-level Python web framework.</div>
             </div>
+        </div>
+        
+        <div class="mt-4">
+            <a href="{% url 'onlinecourse:index' %}" class="btn btn-primary">Back to Course List</a>
         </div>
     </div>
 </body>
