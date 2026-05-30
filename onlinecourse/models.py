@@ -8,10 +8,7 @@ class Course(models.Model):
     description = models.CharField(max_length=500)
     pub_date = models.DateField(null=False, default=now)
     
-    # THÊM related_name='course_instructors' VÀO ĐÂY:
     instructors = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='course_instructors')
-    
-    # THÊM related_name='course_users' VÀO ĐÂY:
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Enrollment', related_name='course_users')
 
     def __str__(self):
@@ -22,7 +19,9 @@ class Lesson(models.Model):
     order = models.IntegerField(default=0)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     content = models.TextField()
-    def __str__(self): return self.title
+    
+    def __str__(self): 
+        return self.title
 
 class Enrollment(models.Model):
     AUDIT = 'audit'; HONOR = 'honor'
@@ -37,20 +36,33 @@ class Question(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=500, default="Question text")
     grade = models.IntegerField(default=1)
+    
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
         selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
         selected_wrong = self.choice_set.filter(is_correct=False, id__in=selected_ids).count()
         return all_answers == selected_correct and selected_wrong == 0
-    def __str__(self): return self.question_text
+        
+    def __str__(self): 
+        return self.question_text
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=500, default="Choice text")
     is_correct = models.BooleanField(default=False)
-    def __str__(self): return self.choice_text
+    
+    def __str__(self): 
+        return self.choice_text
 
 class Submission(models.Model):
     enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
     choices = models.ManyToManyField(Choice)
     date_submitted = models.DateField(default=now)
+
+class Instructor(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # Đổi thành on_delete
+    bio = models.CharField(max_length=500, default="")
+
+class Learner(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # Đổi thành on_delete
+    social_link = models.URLField(default="")
